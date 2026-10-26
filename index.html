@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="it">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pokémon TCG Hand & Deck Doctor</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <h1>PTCG Deck Engine & Doctor</h1>
+        <p class="subtitle">
+          Monte Carlo Consistency Simulator & Turn 1 Visual Playtester (Powered
+          by TCGdex)
+        </p>
+      </header>
+
+      <!-- 1. Import Panel -->
+      <section class="panel">
+        <h2 class="panel-title">📥 1. Incolla Decklist (Export PTCG Live)</h2>
+        <textarea
+          id="deckImportText"
+          rows="5"
+          placeholder="Incolla qui la lista esportata da PTCG Live..."
+        ></textarea>
+        <div
+          style="
+            margin-top: 12px;
+            display: flex;
+            gap: 10px;
+            align-items: center;
+          "
+        >
+          <button id="importBtn">Importa e Sincronizza API</button>
+          <span
+            id="apiStatusIndicator"
+            style="font-size: 0.82rem; color: var(--text-muted)"
+            >Pronto.</span
+          >
+          <button
+            id="clearCacheBtn"
+            class="btn-danger"
+            style="margin-left: auto"
+          >
+            Reset Cache
+          </button>
+        </div>
+      </section>
+
+      <!-- 2. Visual Playtester -->
+      <section class="panel">
+        <h2 class="panel-title">🃏 2. Visual Playtester Turno 1</h2>
+        <div class="playtester-controls">
+          <button id="drawHandBtn">Mano Iniziale (7 Carte)</button>
+          <button id="drawT1Btn" class="btn-secondary">+ Pesca Turno 1</button>
+          <span
+            id="handStatusBadge"
+            class="status-badge"
+            style="display: none"
+          ></span>
+        </div>
+
+        <div class="card-tray-label">Mano Giocatore:</div>
+        <div class="card-tray" id="handContainer"></div>
+
+        <div class="card-tray-label" style="margin-top: 14px">
+          Carte Premio (Clicca per rivelare):
+        </div>
+        <div class="card-tray" id="prizesContainer"></div>
+      </section>
+
+      <!-- 3. Configurazione Mazzo a Griglia -->
+      <section class="panel">
+        <div
+          style="
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 14px;
+          "
+        >
+          <h2 class="panel-title" style="margin: 0">
+            📋 3. Configurazione Mazzo
+          </h2>
+          <div>
+            <strong>Totale Carte: </strong>
+            <span id="cardCount" style="color: #60a5fa; font-weight: 800"
+              >0</span
+            >
+            / 60
+          </div>
+        </div>
+
+        <!-- Legenda Sintetica -->
+        <div class="legend-box">
+          <div class="legend-item">
+            <span class="legend-tag" style="color: var(--accent-green)"
+              >🟢 Starter T1</span
+            >
+            <span class="legend-desc"
+              >Apertura ideale attiva (es. Dreepy, Comfey).</span
+            >
+          </div>
+          <div class="legend-item">
+            <span class="legend-tag" style="color: #60a5fa">⚡ Motore T1</span>
+            <span class="legend-desc"
+              >Poffin, Nest Ball, Arven: sbloccano la mano T1.</span
+            >
+          </div>
+          <div class="legend-item">
+            <span class="legend-tag" style="color: #c084fc">🔄 Motore Mid</span>
+            <span class="legend-desc"
+              >Drakloak, Bibarel: pescano dal turno 2.</span
+            >
+          </div>
+          <div class="legend-item">
+            <span class="legend-tag" style="color: var(--text-muted)"
+              >⚪ Neutra / Tech</span
+            >
+            <span class="legend-desc"
+              >Energie o supporti passivi (es. Fezandipiti ex).</span
+            >
+          </div>
+          <div class="legend-item">
+            <span class="legend-tag" style="color: var(--accent-red)"
+              >🔴 Brick T1</span
+            >
+            <span class="legend-desc"
+              >Evoluzioni non giocabili al T1, Super Rod.</span
+            >
+          </div>
+        </div>
+
+        <!-- Griglia di Card -->
+        <div id="deckGrid" class="deck-grid"></div>
+
+        <div style="margin-top: 20px">
+          <button
+            id="runBtn"
+            style="width: 100%; padding: 12px; font-size: 1rem"
+          >
+            ⚡ Esegui Simulazione Statistica (10.000 Mani)
+          </button>
+        </div>
+      </section>
+
+      <!-- 4. Risultati & Deck Doctor -->
+      <section class="panel" id="output">
+        <p style="color: var(--text-muted); margin: 0; text-align: center">
+          Importa una lista o usa il mazzo predefinito, quindi avvia la
+          simulazione.
+        </p>
+      </section>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
